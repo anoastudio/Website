@@ -1,5 +1,13 @@
 #=== Google Admob 20/12/2025
 google.com, pub-7466675809102151, DIRECT, f08c47fec0942fa0
+
+#=== Verve 22/01/2026
+pubnative.net, 1017562, RESELLER, d641df8625486a7b
+bold-win.com, 147, RESELLER, 71746737d0bab951
+conversantmedia.com, 100097, RESELLER, 03113cd04947736d
+sabio.us, 100032, RESELLER, 96ed93aaa9795702 #Verve
+blis.com, 137, RESELLER, 61453ae19a4b73f4
+
 #=== Unity 20/12/2025
 33across.com, 0010b00002MptSLAAZ, RESELLER, bbea06d9c4d2853c
 aceex.io, 1926, RESELLER, b1cf3c874d5c6682

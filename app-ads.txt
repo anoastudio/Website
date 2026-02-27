@@ -1,6 +1,9 @@
 #=== Google Admob 20/12/2025
 google.com, pub-7466675809102151, DIRECT, f08c47fec0942fa0
 
+#=== Geniee 27/02/2026
+genieesspv.jp, 225101, RESELLER
+
 #=== Verve 22/01/2026
 pubnative.net, 1017562, RESELLER, d641df8625486a7b
 bold-win.com, 147, RESELLER, 71746737d0bab951

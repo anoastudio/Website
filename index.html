@@ -194,9 +194,6 @@ footer img{height:26px;width:auto}
 /* playful layer: XP bar, achievement toasts, game-feel hovers */
 .xp{position:absolute;left:0;right:0;bottom:0;height:5px;background:rgba(255,255,255,.12)}
 .xp-fill{height:100%;width:0;background:var(--amber);transition:width .15s linear}
-.xp-label{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:calc(100% + 6px);font:800 10px/1 var(--display);letter-spacing:.14em;text-transform:uppercase;background:var(--night);color:var(--amber);padding:6px 8px;border:2px solid var(--amber);box-shadow:3px 3px 0 var(--purple);white-space:nowrap}
-.xp-label.up{animation:lvup .6s}
-@keyframes lvup{0%{transform:scale(1)}35%{transform:scale(1.25);background:var(--amber);color:var(--amber-ink)}100%{transform:scale(1)}}
 .toasts{position:fixed;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;display:flex;flex-direction:column;gap:10px;pointer-events:none;max-width:calc(100vw - 32px)}
 .toast{display:flex;align-items:center;gap:12px;background:var(--night);color:var(--white);border:2px solid var(--amber);box-shadow:5px 5px 0 var(--purple);padding:10px 14px 10px 10px;min-width:0;animation:tin .35s cubic-bezier(.2,1.4,.4,1)}
 .toast.out{animation:tout .3s forwards}
@@ -214,8 +211,7 @@ footer img{height:26px;width:auto}
 .award.pop{border-color:var(--amber);border-style:solid;background:#fff9ec}
 .award.pop img{animation:pop .55s ease-out}
 .member:hover .ph img{animation:bob .55s ease-out}
-@media(max-width:860px){.xp-label{top:auto;bottom:23px;right:96px;padding:5px 7px;box-shadow:none}}
-@media(prefers-reduced-motion:reduce){.game:hover img,.serv:hover .ic img,.award:hover img,.award.pop img,.member:hover .ph img,.xp-label.up,.toast{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.game:hover img,.serv:hover .ic img,.award:hover img,.award.pop img,.member:hover .ph img,.toast{animation:none!important}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
@@ -255,7 +251,7 @@ footer img{height:26px;width:auto}
 
 <div class="ribbon">
   <div class="wrap">
-    <div><b>10</b><small>Games on Google Play</small></div>
+    <div><b>9</b><small>Games on Google Play</small></div>
     <div><b>6</b><small>Awards &amp; nominations</small></div>
     <div><b>13</b><small>Partners</small></div>
     <div><b>4</b><small>Core team</small></div>
@@ -285,7 +281,6 @@ footer img{height:26px;width:auto}
       <article class="game"><img src="assets/img/g-crop-crush.png" alt=""><span class="kind">Puzzle</span><h3>Crop Crush Garden</h3><a href="https://play.google.com/store/apps/details?id=com.Anoa.CCG" target="_blank" rel="noopener"><span class="gpl"><svg class="gp" aria-hidden="true"><use href="#gp"/></svg>Google Play</span> <span aria-hidden="true">↗</span></a></article>
       <article class="game"><img src="assets/img/g-punch-it.png" alt=""><span class="kind">Casual</span><h3>Punch It 3D</h3><a href="https://play.google.com/store/apps/details?id=com.Anoa.PI3D" target="_blank" rel="noopener"><span class="gpl"><svg class="gp" aria-hidden="true"><use href="#gp"/></svg>Google Play</span> <span aria-hidden="true">↗</span></a></article>
       <article class="game"><img src="assets/img/g-wrt3d.png" alt=""><span class="kind">Casual · 3D</span><h3>Water Ring Toss 3D: Puzzle Game</h3><a href="https://play.google.com/store/apps/details?id=com.Anoa.WRT3D" target="_blank" rel="noopener"><span class="gpl"><svg class="gp" aria-hidden="true"><use href="#gp"/></svg>Google Play</span> <span aria-hidden="true">↗</span></a></article>
-      <article class="game"><img src="assets/img/g-masbook.png" alt=""><span class="kind">Card game</span><h3>Masbook Doom Scrolling</h3><a href="https://play.google.com/store/search?q=Masbook+Doom+Scrolling+Anoa+Interactive&amp;c=apps" target="_blank" rel="noopener"><span class="gpl"><svg class="gp" aria-hidden="true"><use href="#gp"/></svg>Google Play</span> <span aria-hidden="true">↗</span></a></article>
       <article class="game"><img src="assets/img/g-soda-factory.png" alt=""><span class="kind">Casual</span><h3>Soda Factory</h3><a href="https://play.google.com/store/apps/details?id=com.anoa.SodaFactory" target="_blank" rel="noopener"><span class="gpl"><svg class="gp" aria-hidden="true"><use href="#gp"/></svg>Google Play</span> <span aria-hidden="true">↗</span></a></article>
     </div>
   </div>
@@ -405,14 +400,9 @@ function next(){const t=q.shift();if(!t){busy=false;return}busy=true;
  setTimeout(()=>{el.classList.add('out');setTimeout(()=>{el.remove();next()},300)},1100)}
 /* 1. XP bar */
 const header=document.querySelector('header');
-header.insertAdjacentHTML('beforeend','<div class="xp" aria-hidden="true"><div class="xp-fill"></div><span class="xp-label">LV 1 · Start</span></div>');
-const fill=header.querySelector('.xp-fill'),label=header.querySelector('.xp-label');
-const levels=[['.hero','Start'],['#about','About'],['#games','Games'],['#publisher','Publisher'],['#services','Services'],['#achievements','Awards'],['#team','Team'],['#partners','Partners'],['#contact','Contact']].map(([s,n])=>[document.querySelector(s),n]).filter(x=>x[0]);
-let lv=0;
-function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;const pct=max>0?Math.min(1,scrollY/max):0;fill.style.width=(pct*100)+'%';
- let cur=0;levels.forEach(([el],i)=>{if(el.getBoundingClientRect().top<innerHeight*.4)cur=i});
- if(pct>.985)cur=levels.length-1;
- if(cur!==lv){const up=cur>lv;lv=cur;label.textContent='LV '+(cur+1)+' · '+(cur===levels.length-1?'Max':levels[cur][1]);if(up){label.classList.remove('up');void label.offsetWidth;label.classList.add('up')}}}
+header.insertAdjacentHTML('beforeend','<div class="xp" aria-hidden="true"><div class="xp-fill"></div></div>');
+const fill=header.querySelector('.xp-fill');
+function onScroll(){const max=document.documentElement.scrollHeight-innerHeight;const pct=max>0?Math.min(1,scrollY/max):0;fill.style.width=(pct*100)+'%';}
 addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
 /* 2. Achievements */
 const awards=[...document.querySelectorAll('.award')];
